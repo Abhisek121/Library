@@ -1,0 +1,12 @@
+{% for book in books %}
+
+<TR>
+    <TD>{{ forloop.counter }}</TD>
+    <TD>{{ book.bookname}}</TD>
+    <TD>{{ book.author}}</TD>
+    <TD>{{ book.publication}}</TD>
+    <TD>{{ book.amount}}</TD>
+    <TD>{{ book.bookid}}</TD>
+</TR>
+
+{% endfor %}

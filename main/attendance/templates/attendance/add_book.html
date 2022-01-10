@@ -1,0 +1,34 @@
+{% extends 'attendance/basic.html' %}
+{% block title %}Add users{% endblock %}
+
+{% block body %}
+<form action="/click_add_book/" method="post"> {% csrf_token %}
+  <div class="form-group">
+    <label for="bookname">Book Name</label>
+    <input type="text" name="bookname" class="form-control" id="bookname" placeholder="Book Name">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="phone">Author</label>
+      <input type="text" name="author" class="form-control" id="author" placeholder="Author">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="phone">Publication</label>
+      <input type="text" name="publication" class="form-control" id="publication" placeholder="Publication">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="phone">Book ID</label>
+      <input type="number" name="bookid" class="form-control" id="bookid" placeholder="Book ID">
+    </div>
+    <div class="form-group">
+      <label for="department">No. of Books</label>
+      <input type="number" name="amount" class="form-control" id="amount" placeholder="No. of Books">
+    </div>
+  </div>
+  
+  
+  <div>
+  <button type="submit" class="btn btn-primary">Add</button>
+  </div>
+</form>
+{% endblock %}

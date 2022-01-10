@@ -1,0 +1,37 @@
+{% extends 'attendance/basic.html' %}
+
+{% block title %}Book Details{% endblock %}
+
+{% block body %}
+<div class="container-fluid text-center" >
+  <br>
+  <h1 class="text-center text-success" >Available Books</h1>
+  <br>
+  <table class="table">
+  <thead class="thead-light">
+    <TR>
+    <TH>S.N</TH>
+    <TH>Book Name</TH>
+    <TH>Author</TH>
+    <TH>Publication</TH>
+    <TH>No. of Books</TH>
+    <TH>Book ID</TH>
+</TR>
+  </thead>
+  <tbody id="bookdetails" class="bookdetails">
+    </tbody>
+</table>
+    </div>{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function(){
+    setInterval(function(){
+      $.ajax({
+        url: "{% url 'bookdetails1' %}"
+        }).done(function(data) {
+        $('#bookdetails').html(data);
+      });
+    },3000);
+  });
+  </script>
+{% endblock %}
