@@ -1,1 +1,1 @@
-web: gunicorn DEM-main.wsgi
+web: gunicorn main.wsgi
