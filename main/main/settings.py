@@ -25,7 +25,7 @@ SECRET_KEY = 'wtbwtmabi1dy_z$3(==i&2^o2zdlv6@+410s)ex#mu00)66_!w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.4.43','127.0.0.1','192.168.2.120','192.168.43.203', '192.168.0.106', '192.168.0.112','192.168.43.203']
+ALLOWED_HOSTS = ['192.168.4.43','127.0.0.1','192.168.2.120','192.168.43.203', '192.168.0.106', '192.168.0.112','192.168.43.203', 'kheclibrary.herokuapp.com',]
 
 
 
@@ -138,5 +138,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 LOGIN_REDIRECT_URL = '/'
