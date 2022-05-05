@@ -1,1 +1,1 @@
-web: gunicorn DEM-main.wsgi
+web: gunicorn DEM-main.wsgi --log-file -
