@@ -2,7 +2,7 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
-
+# from twilio.rest import Client
 
 class User(AbstractUser):
     @property
@@ -37,6 +37,7 @@ class Employee(models.Model):
 
 class BookRecord(models.Model):
     bk=models.ManyToManyField(Book)
+    bookid = models.BigIntegerField(null=True)
     bookname=models.CharField(max_length=60, blank=True, null=True)
     issuedDate=models.DateField(default=datetime.date.today)
 
@@ -78,3 +79,33 @@ class Tickets(models.Model):
     content = models.CharField(max_length=100)
     date = models.DateField(max_length= 100, default=None)
     status = models.CharField(max_length=100, null=True)
+
+class MergeRecords(models.Model):
+    book = models.CharField(max_length=50, default=None)
+    student = models.CharField(max_length=100, default=None)
+
+# class Score(models.Model):
+#     #integer field
+#     test_result = models.PositiveIntegerField()
+
+#     #string representation
+#     def __str__(self):
+#         return str(self.test_result)
+
+#     #save method
+#     def save(self, *args, **kwargs):
+#         #if test_result is less than 80 execute this
+#         if self.test_result < 80:
+#             #twilio code
+#             account_sid = 'ACc0729c27fcc805834a08d88cec9d22fb'
+#             auth_token = 'eb37225daf481d345f6f94b32d7a348e'
+#             client = Client(account_sid, auth_token)
+
+#             message = client.messages.create(
+#                                         body=f'Hi, your test result is {self.test_result}. Great job',
+#                                         from_='+15076398787',
+#                                         to='+9779843507304' 
+#                                     )
+
+#             print(message.sid)
+#         return super().save(*args, **kwargs)

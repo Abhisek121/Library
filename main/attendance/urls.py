@@ -13,6 +13,7 @@ urlpatterns = [
     path('about_me/', views.about_me, name = 'about_me'),
     path('process/', views.process, name = 'process'),
     path('processbook/', views.processbook, name = 'processbook'),
+    path('anti_theft/', views.anti_theft, name='anti_theft'),
     path('users/', views.details, name = 'details'),
     path('books/', views.details_book, name = 'books'),
     path('manage/', views.manage , name = 'manage'),
@@ -25,10 +26,13 @@ urlpatterns = [
     path('click_add/', views.click_add),
     path('click_add_book/', views.click_add_book),
     path('export/', views.exportcsv, name='export'),
+    path('email/', views.email, name='email'),
     path('empLeave/', views.EmpLeaveApp, name= 'empLeave'),
     path('leaves/', views.leaves, name= 'leaves'),
     path('notification/', views.notification, name= 'notification'),
     path('notice_view/', views.notice_view, name= 'notice_view'),
     path('empticket/', views.sendticket, name='empticket'),
-    path('ticketview/', views.tickets, name='ticketview')
+    path('ticketview/', views.tickets, name='ticketview'),
+    path('history/', views.history, name='history'),
+   
 ]

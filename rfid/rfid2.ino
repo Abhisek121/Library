@@ -15,11 +15,15 @@
 WiFiClient wifiClient;
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance.
 
+//const char* ssid = "TP-Link_1A38";
+//const char* pwd = "29116775";
+//const char* ssid = "HUAWEI Y7 Prime";
+//const char* pwd = "sujan1025";
 const char* ssid = "TP-LINK_62A4";
 const char* pwd = "WiFiOfThanos";
-
 String getData ,Link;
 String CardID="";
+String PostVal="";
 
 void setup() {
   pinMode(GreenLed,OUTPUT);
@@ -88,8 +92,7 @@ void loop() {
   
   //GET Data
   getData = CardID;
-  Link = "http://192.168.0.105:8000/process/?card_id="+ getData; // ENTER YOUR HOST NAME HERE
-  
+  Link = "http://192.168.43.203:8000/process/?card_id="+ getData; // ENTER YOUR HOST NAME HERE
   
   http.begin(wifiClient, Link);
   int httpCode = http.GET();            //Send the request
@@ -99,23 +102,49 @@ void loop() {
   Serial.println(httpCode);   //Print HTTP return code
   Serial.println(payload);    //Print request response payload
   
-  if(payload == "login"){
+  if(payload == "Not registered"){
+    Serial.println(getData);
+    Link = "http://192.168.43.203:8000/processbook/?card_id="+ getData;
+    http.begin(wifiClient, Link);
+    int httpCode = http.GET();            //Send the request
+    delay(10);
+    String payload = http.getString();    //Get the response payload
+  
+    Serial.println(httpCode);   //Print HTTP return code
+    Serial.println(payload); 
+    delay(100);
+    if(payload == "auth2"){
+      // digitalWrite(WaitLed,LOW);
+      // digitalWrite(GreenLed,HIGH);
+
+      // PostVal = String(CardID)
+      // Link2 = "http://192.168.0.110:8000/data/";
+      // http.begin(wifiClient, Link2);
+      // http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+      // int httpCode2 = http.POST(PostVal);
+      // String payload2 = http.getString(); 
+
+      // Serial.println("Code 2:");
+      // Serial.println(httpCode2);   //Print HTTP return code
+      // Serial.println("Payload 2:");
+      // Serial.println(payload2); 
+
+      Serial.println("green on 2");
+      delay(100); 
+      }
+    
+  }
+  else if(payload == "auth"){
     digitalWrite(WaitLed,LOW);
     digitalWrite(GreenLed,HIGH);
     Serial.println("green on");
-    delay(1000); 
+    delay(100); 
   }
-  else if(payload == "logout"){
-    digitalWrite(WaitLed,LOW);
-    digitalWrite(BlueLed,HIGH);
-    Serial.println("Blue on");
-    delay(100);
-  }
-  else{
-    digitalWrite(WaitLed,LOW);
-    digitalWrite(RedLed,HIGH);
-    delay(500);  
-    }
+//  else{
+//    digitalWrite(WaitLed,LOW);
+//    digitalWrite(RedLed,HIGH);
+//    delay(500);  
+//    }
   delay(500);
   
   CardID = "";

@@ -1,0 +1,31 @@
+{% extends 'attendance/basic.html' %}
+
+{% block title %}Attendance Home{% endblock %}
+
+{% block body %}
+
+  <h3>Book details</h3>
+      <table class="table table-striped table-sm">
+        <thead class="table-dark">
+          <TR>
+            <TH>Book ID</TH>
+            <TH>Book Name</TH>
+            <TH>Issued Date</TH>
+          </TR>
+          </thead>
+        
+        <tbody >
+          {% for data in store %}
+            <TR>
+              <TD>{{data.bookid}}</TD>
+              <TD>{{data.bookname}}</TD>
+              <TD>{{data.issuedDate}}</TD>
+            </TR>
+          {% endfor %}
+        </tbody>
+      </table>
+
+
+{% endblock %}
+
+

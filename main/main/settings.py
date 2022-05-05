@@ -25,10 +25,16 @@ SECRET_KEY = 'wtbwtmabi1dy_z$3(==i&2^o2zdlv6@+410s)ex#mu00)66_!w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.4.43','127.0.0.1','192.168.2.157','192.168.0.106', '192.168.0.110', '192.168.0.105','192.168.43.203']
+ALLOWED_HOSTS = ['192.168.4.43','127.0.0.1','192.168.2.120','192.168.43.203', '192.168.0.106', '192.168.0.112','192.168.43.203']
 
 
-# Application definition
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'aviseqkhadgi@gmail.com'
+EMAIL_HOST_PASSWORD = 'xixozfhynthrskgg'
 
 INSTALLED_APPS = [
     'attendance.apps.AttendanceConfig',

@@ -9,6 +9,8 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .forms import EmpLeaveAppForm, NotificationForm, TicketForm
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from twilio.rest import Client
 
 global stat
 stat=''
@@ -217,6 +219,17 @@ def index(request):
     data = {'staffs': staffs, 'records': records, 'absents':absents, 'tickets':tickets, 'recordf':recordf, 'bookcount':bookcount, 'bookrecordcount':bookrecordcount, 'bookrecordtodaycount':bookrecordtodaycount, 'brec':brec}
     return render(request, 'attendance/index.html', data)
 
+@login_required
+def history(request):
+    store=[]
+    allbookrecords= BookRecord.objects.all()
+    for bookrecords in allbookrecords:
+        store.append(bookrecords)
+    store.reverse()
+
+    content = {'store': store}
+    return render(request, 'attendance/history.html', content)
+
 def process(request):
     card=request.GET.get('card_id', 'Cannot find the card')
     users=Employee.objects.all()
@@ -224,8 +237,7 @@ def process(request):
         if user.card_id== int(card):
             res = attend(user)
             return HttpResponse(res)
-    #new_user=Employee(card_id=int(card))
-    #new_user.save()
+            #  render(request, 'attendance/about_me.html')
 
     return HttpResponse("Not registered")
 
@@ -234,23 +246,14 @@ def attend(user):
         curr= 'The profile is not registered'
         return curr
     records = Record.objects.all()
-    # for record in records:
-    #     if record.card_id == int(user.card_id):
-    #         if str(record.date) == str(datetime.datetime.now())[:10]:
-    #             if record.time_out==None:
-    #                 record.time_out=datetime.datetime.now()
-    #                 record.save()
-    #                 curr='logout'
-    #                 return curr
-    #             else:
-    #                 curr='Walkout now'
-    #                 return curr
+
     status = 'present'
     '''user_id =user.user_id,'''
     # new_record=Record( ids=user.id, card_id=user.card_id, name=user.name, department=user.department, date=timezone.now(), time_in=datetime.datetime.now(), status='')
     new_record=Record( ids=user.id, card_id=user.card_id, name=user.name, department=user.department, date=timezone.now(), status='')
     new_record.save()
-    curr='auth'
+    curr='auth2'
+    # curr=user.name
     return curr
 
 def processbook(request):
@@ -268,12 +271,20 @@ def attendbook(book):
         curr= 'The profile is not registered'
         return curr
     
-    new_record=BookRecord( bookname=book.bookname, issuedDate=datetime.date.today())
+    new_record=BookRecord(bookid=book.bookid, bookname=book.bookname, issuedDate=datetime.date.today())
     new_record.save()
     curr='auth2'
+    # curr=book.bookname
     return curr
 
-
+def anti_theft(request):
+    card=request.GET.get('card_id', 'Cannot find the card')
+    bookrecords = BookRecord.objects.all()
+    for bookrecord in bookrecords:
+        if bookrecord.bookid == int(card):
+            return HttpResponse("Book scanned")
+    return HttpResponse("Not scanned")
+    
 
 @login_required
 def click_add(request):
@@ -464,5 +475,28 @@ def exportcsv(request):
     
     return response
 
+def email(request):
+    send_mail(
+    'Test email',
+    'This is a test.',
+    'aviseqkhadgi@gmail.com',
+    ['stha.suman327@gmail.com'],
+    fail_silently=False,
+    )
+    
+    # account_sid = 'ACc0729c27fcc805834a08d88cec9d22fb'
+    # auth_token = 'eb37225daf481d345f6f94b32d7a348e'
+    account_sid = 'AC807418d445867f826cb19d78b442d14a'
+    auth_token = '573026cf6685890e5181d6d7f11430ae'
+    client = Client(account_sid, auth_token)
 
-        
+    message = client.messages.create(
+                                        body=f'Please return the book.',
+                                        # from_='+15076398787',
+                                        # to='+9779843507304' 
+                                        from_='+14454551853',
+                                        to='+9779860275585' 
+                                    )
+    return render(request, 'attendance/add_staff.html')
+
+
